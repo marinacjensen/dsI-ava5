@@ -8,22 +8,24 @@
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
-    <title>Biblioteca - Login</title>
+    <title>Biblioteca - Registro</title>
 </head>
 
 <body>
     <div id="login">
         <img src="midia/icon-login.png" alt="star">
         <h2>Bem-vindo(a) à nossa biblioteca!</h2>
-        <h3>Faça seu login ou <a href="/registro">registre-se</a>.</h3>
+        <h3>Faça seu registro.</h3>
         <div id="form">
-        <form action="/" method="post">
-            <label for="email">Insira seu e-mail:</label>
+            <form action="/" method="post">
+                <label for="nome">Insira seu nome:</label>
+                <input type="text" name="nome" id="nome" class="form"><br>
+                <label for="email">Insira seu e-mail:</label>
                 <input type="email" name="email" id="email" class="form"><br>
-            <label for="senha">Insira sua senha:</label>
+                <label for="senha">Insira sua senha:</label>
                 <input type="password" name="senha" id="senha" class="form"><br>
-            <button type="submit" name="submit" class="btn">Entrar</button>
-        </form>
+                <button type="submit" name="submit" class="btn">Registrar</button>
+            </form>
         </div>
     </div>
 </body>

@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Trirong:ital,wght@0,200;1,300&display=swap');
+@font-face {
+   font-family: Quaaykop;
+   src: url(../fonts/Quaaykop\ Medium.otf);
+}
+
+body {
+    background-image: url(../midia/bg-img.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#login {
+  width: 60%;
+  margin-top: 3%;
+  margin-left: 20%;
+  margin-right: 20%;
+  text-align: center;
+  display: block;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);  
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+img {
+    width: 15%;
+    height: 15%;
+}
+
+h2 {
+    font-family: 'Quaaykop', serif;
+    text-align: center;
+    font-size: 300%;
+    color: white;
+    text-shadow: 0 4px 30px #9ff5ebd8;
+}
+
+h3 {
+    font-family: 'Trirong', serif;
+    text-align: center;
+    font-size: 200%;
+    color: white;
+    text-shadow: 0 4px 30px #9ff5ebd8;
+}
+
+a {
+    font-family: 'Trirong', serif;
+    text-decoration: underline;
+    font-style: italic;
+}
+
+#form {
+    font-family: 'Trirong', serif;
+    font-weight: bolder;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    display:block;
+    color: white;
+    text-shadow: 0 4px 20px #83f8f2d8;
+}
+
+.form {
+    width: 60%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    background-color: #c7fff8cc;
+    border-radius: 16px;
+    text-align: left;
+    color: rgb(51, 51, 51);
+}
+
+.btn {
+    margin-top: 3%;
+    background-color: #839af7c4;
+    width: 30%;
+    padding: 12px 20px;
+    border-radius: 16px;
+    color: white;
+}
