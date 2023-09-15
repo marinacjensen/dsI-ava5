@@ -5,14 +5,14 @@ const app = express();
 const handlebars = require('express-handlebars');
 const handlebars_mod = require('handlebars');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
-const appRoutes = require('./routes/approutes');
+const appRoutes = require('./routes/appRoutes');
 
 // Middlewares
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'))
+
 
 // Handlebars configuration
 const helpers = require('./helpers/helpers'); // Import the helpers
