@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Biblioteca - Livros</title>
+</head>
+
+<body>
+    <div id="wrapper">
+        <img src="midia/icon-login.png" alt="star">
+        <h2>Livros disponíveis</h2>
+        <h3><a href="/registroLivros">Adicionar livros</a></h3>
+        <table id="livros">
+            <tr>
+                <th>ID</th>
+                <th>Autor</th>
+                <th>Título</th>
+                <th>Ano</th>
+                <th>Disponíveis</th>
+                <th>Empréstimos</th>
+                <th>Opções</th>
+            </tr>
+            {{#each results}}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{autor}}</td>
+                <td>{{titulo}}</td>
+                <td>{{ano}}</td>
+                <td>{{quantidade}}</td>
+                {{#unless (compare id_user '===' null)}}
+                <td>{{id_user}}</td>
+                {{/unless}}
+                <td>
+                <button class="option"><a href="/edita/{{id}}">Editar</a></button>
+                <button class="option"><a href="/deleta/{{id}}">Deletar</a></button>
+                </td>
+            </tr>
+            {{/each}}
+        </table>
+
+    </div>
+</body>
+
+</html>

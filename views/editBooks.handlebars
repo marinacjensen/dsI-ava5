@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Edição de livros</title>
+</head>
+
+<body>
+    <div id="wrapper">
+        <img src="midia/icon-login.png" alt="star">
+        <h2>Edite seus livros!</h2>
+        <div id="form">
+            <form action="/edita/{{id}}" method="post">
+                <label for="autor">Autor:</label>
+                <input type="text" name="autor" id="autor" class="form" value="{{livros.autor}}"><br>
+                <label for="titulo">Título:</label>
+                <input type="text" name="titulo" id="titulo" class="form" value="{{livros.titulo}}"><br>
+                <label for="ano">Ano:</label>
+                <input type="text" name="ano" id="ano" class="form" value="{{livros.ano}}"><br>
+                <label for="quantidade">Quantidade:</label>
+                <input type="text" name="quantidade" id="quantidade" class="form" value="{{livros.quantidade}}"><br>
+                <button type="submit" name="submit" class="btn">Registrar</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
