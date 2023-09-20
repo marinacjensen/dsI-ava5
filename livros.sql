@@ -32,7 +32,7 @@ CREATE TABLE `livros` (
   `autor` varchar(255) NOT NULL,
   `titulo` varchar(255) NOT NULL,
   `ano` int(11) NOT NULL,
-  `id_cliente` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
   `quantidade` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -45,7 +45,7 @@ CREATE TABLE `livros` (
 --
 ALTER TABLE `livros`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `userid_fk` (`id_cliente`);
+  ADD KEY `userid_fk` (`id_user`);
 
 --
 -- AUTO_INCREMENT de tabelas despejadas
@@ -65,7 +65,7 @@ ALTER TABLE `livros`
 -- Limitadores para a tabela `livros`
 --
 ALTER TABLE `livros`
-  ADD CONSTRAINT `userid_fk` FOREIGN KEY (`id_cliente`) REFERENCES `usuarios` (`id`);
+  ADD CONSTRAINT `userid_fk` FOREIGN KEY (`id_user`) REFERENCES `usuarios` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
