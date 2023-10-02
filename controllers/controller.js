@@ -25,14 +25,39 @@ exports.addUser = async (req, res) => {
     await usuarios.create({
         nome,
         email,
-        senha_hashed
+        senha: senha_hashed
     });
+    req.flash('success', 'Usuário cadastrado com sucesso!');
     res.redirect('/');
 }
 
-exports.showUser = (req, res) => {
-    res.render('user');
-}
+exports.authUser = async (req, res) => {
+    const {
+        email,
+        senha
+    } = req.body;
+    const {
+        id,
+        nome,
+        senha: senha_hashed
+    } = await usuarios.findOne({
+        where: {
+            email
+        }
+    });
+    const auth = await bcrypt.compare(senha, senha_hashed);
+    if (!auth) {
+        req.flash('errors', 'Usuário ou senha incorretos');
+        return res.redirect('/');
+    }
+    req.session.regenerate(() => {
+        req.session.user = {
+            id,
+            nome
+        };
+        return res.redirect('/user');
+    });
+};
 
 exports.showBooks = async (req, res) => {
     const results = await livros.findAll({

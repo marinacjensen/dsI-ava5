@@ -1,19 +1,25 @@
 const express = require('express');
-const path = require('path');
+const {
+    engine
+} = require('express-handlebars');
+const handlebars = require('handlebars');
+const {
+    allowInsecurePrototypeAccess
+} = require('@handlebars/allow-prototype-access');
 const bodyParser = require('body-parser');
-const app = express();
-const handlebars = require('express-handlebars');
-const handlebars_mod = require('handlebars');
-const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
-const appRoutes = require('./routes/appRoutes');
 const session = require('express-session');
 const flash = require('connect-flash');
+const path = require('path');
+const router = require('./routes/router');
+const sequelize = require('./config/database');
 
-// Middlewares
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+sequelize.sync();
 
-app.use(express.static('public'))
+const app = express();
+
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 
 app.use(session({
     secret: 'secretkey',
@@ -25,36 +31,21 @@ app.use(flash());
 app.use((req, res, next) => {
     res.locals.success = req.flash('success');
     res.locals.errors = req.flash('errors');
-    res.locals.error = req.session.error;
+    res.locals.session = req.session;
     next();
 });
 
-// Handlebars configuration
-const helpers = require('./helpers/helpers'); // Import the helpers
-const { sequelize } = require('./config/database');
-app.engine('handlebars', handlebars.engine({
-    defaultLayout: false,
-    handlebars: allowInsecurePrototypeAccess(handlebars_mod),
-    extname: '.handlebars',
-    helpers: helpers
+app.engine('.hbs', engine({
+    extname: '.hbs',
+    handlebars: allowInsecurePrototypeAccess(handlebars)
 }));
+app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'handlebars');
 
-// Sync the models with the database
-sequelize.sync()
-    .then(() => {
-        console.log('Database synced sucessfully');
-    })
-    .catch((error) => {
-        console.error('Error syncing database:', error);
-    });
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Routes
-app.use(appRoutes);
+app.use(router);
 
-// Start server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`App is running on port ${PORT}`);
+app.listen(3000, () => {
+    console.log(`App listening on port 3000`);
 });

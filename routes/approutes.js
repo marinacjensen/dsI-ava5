@@ -6,7 +6,7 @@ var controller = require("../controllers/controller");
 router.get("/", controller.index);
 router.get("/registro", controller.registerForm);
 router.post("/registro", controller.addUser);
-router.get("/usuario", controller.showUser);
+router.get("/user", controller.showUser);
 router.get("/livros", controller.showBooks);
 router.get("/registroLivros", controller.registerBooks);
 router.post("/registroLivros", controller.addBooks);
