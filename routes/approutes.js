@@ -12,6 +12,6 @@ router.get("/registroLivros", controller.registerBooks);
 router.post("/registroLivros", controller.addBooks);
 router.get("/deleta/:id", controller.deleta);
 router.get("/edita/:id", controller.edita);
-router.post("/edita/:id", controller.atualiza)
+router.post("/edita/:id", controller.atualiza);
 
 module.exports = router;

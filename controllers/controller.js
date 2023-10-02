@@ -94,13 +94,11 @@ exports.atualiza = async (req, res) => {
         ano,
         quantidade
     } = req.body;
-    const user = null;
-    await empregados.update({
+    await livros.update({
         autor,
         titulo,
         ano,
-        quantidade,
-        user
+        quantidade
     }, {
         where: {
             id

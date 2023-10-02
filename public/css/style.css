@@ -5,11 +5,8 @@
 }
 
 body {
-    background-image: url(../midia/bg-img.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    margin: 0;
-    padding: 0;
+    background: rgb(140,248,245);
+    background: radial-gradient(circle, rgba(140,248,245,1) 0%, rgba(113,95,255,1) 35%, rgba(49,58,230,1) 100%);
     box-sizing: border-box;
     display: flex;
     justify-content: center;
@@ -53,7 +50,6 @@ h3 {
 
 a {
     font-family: 'Trirong', serif;
-    text-decoration: underline;
     font-style: italic;
 }
 
@@ -72,7 +68,7 @@ a {
     padding: 12px 20px;
     margin: 8px 0;
     box-sizing: border-box;
-    background-color: #c7fff8cc;
+    background-color: #7e6efaad;
     border-radius: 16px;
     text-align: left;
     color: rgb(51, 51, 51);
@@ -81,7 +77,7 @@ a {
 .btn {
     margin-top: 3%;
     text-align: center;
-    background-color: #839af7c4;
+    background-color: #313ae6;
     width: 30%;
     padding: 12px 20px;
     border-radius: 16px;
@@ -93,20 +89,20 @@ a {
     width: 90%;
     margin: 3% 5% 5%;
     font-family: 'Trirong', serif;
+    color: white;
 }
 
 #livros th{
     font-weight: bold;
-    color: rgb(110, 119, 131);
 }
 
 #livros th, td {
-    border-bottom: 1px solid #839af7c4;
+    border-bottom: 1px solid #646be9;
 }
 
 .option {
     margin: 1% 0%;
-    background-color: #839af7c4;
+    background-color: #464ee6;
     width: 35%;
     padding: 5px 15px;
     border-radius: 16px;

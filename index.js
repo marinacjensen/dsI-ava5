@@ -6,6 +6,8 @@ const handlebars = require('express-handlebars');
 const handlebars_mod = require('handlebars');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 const appRoutes = require('./routes/appRoutes');
+const session = require('express-session');
+const flash = require('connect-flash');
 
 // Middlewares
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -13,6 +15,19 @@ app.use(bodyParser.json());
 
 app.use(express.static('public'))
 
+app.use(session({
+    secret: 'secretkey',
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(flash());
+app.use((req, res, next) => {
+    res.locals.success = req.flash('success');
+    res.locals.errors = req.flash('errors');
+    res.locals.error = req.session.error;
+    next();
+});
 
 // Handlebars configuration
 const helpers = require('./helpers/helpers'); // Import the helpers
