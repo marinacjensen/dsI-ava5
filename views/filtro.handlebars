@@ -8,31 +8,21 @@
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/specific/user.css">
     <title>Biblioteca - Livros</title>
 </head>
 
 <body>
     <div id="wrapper">
         <img src="midia/icon-login.png" alt="star">
-        <div id="menu">
-        <form action="/busca" method="get">
-            <label for="busca">
-                <input type="text" name="busca" id="busca" value="{{busca}}" placeholder="Nome do livro" class="busca">
-            </label>
-            <button type="submit" class="btnUser">Pesquisar</button>
-        </form>
-        <a href="/booksUser" class="btnUser">Mostrar livros</a>
-        <a href="/booksAno" class="btnUser">Ano de lançamento</a>
-        </div>
-        <h2>Livros emprestados</h2>
-        {{#if results}}
+        <h2>Livros disponíveis</h2>
         <table id="livros">
             <tr>
                 <th>ID</th>
                 <th>Autor</th>
                 <th>Título</th>
                 <th>Ano</th>
+                <th>Disponíveis</th>
+                <th></th>
             </tr>
             {{#each results}}
             <tr>
@@ -41,13 +31,12 @@
                 <td>{{titulo}}</td>
                 <td>{{ano}}</td>
                 <td>{{quantidade}}</td>
+                <td>
+                    <button class="option"><a href="/aluga/{{id}}">Alugar</a></button>
+                </td>
             </tr>
             {{/each}}
-            {{else}}
-            <h3>Não há livros na sua lista!</h3>
-            {{/if}}
         </table>
-        <a href="/logout" class="btnUser">Sair</a>
     </div>
 </body>
 

@@ -23,7 +23,6 @@
                 <th>Título</th>
                 <th>Ano</th>
                 <th>Disponíveis</th>
-                <th>Empréstimos</th>
                 <th>Opções</th>
             </tr>
             {{#each results}}
@@ -33,9 +32,6 @@
                 <td>{{titulo}}</td>
                 <td>{{ano}}</td>
                 <td>{{quantidade}}</td>
-                {{#unless (compare id_user '===' null)}}
-                <td>{{id_user}}</td>
-                {{/unless}}
                 <td>
                 <button class="option"><a href="/edita/{{id}}">Editar</a></button>
                 <button class="option"><a href="/deleta/{{id}}">Deletar</a></button>
@@ -43,7 +39,7 @@
             </tr>
             {{/each}}
         </table>
-
+        <a href="/logout" class="btnUser">Sair</a>
     </div>
 </body>
 

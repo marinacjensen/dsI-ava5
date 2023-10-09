@@ -84,6 +84,31 @@ a {
     color: white;
 }
 
+.btnUser {
+    margin: 3% 0;
+    text-align: center;
+    background-color: #313ae6;
+    width: 30%;
+    padding: 5px 15px;
+    border-radius: 16px;
+    color: white;
+}
+
+.busca {
+    width: 30%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    background-color: #7e6efaad;
+    border-radius: 16px;
+    text-align: left;
+    color: rgb(51, 51, 51);
+}
+
+#menu {
+    display: inline;
+    width: 100%;
+}
 
 #livros {
     width: 90%;

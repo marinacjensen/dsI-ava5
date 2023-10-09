@@ -1,25 +1,39 @@
 const express = require('express');
-const {
-    engine
-} = require('express-handlebars');
-const handlebars = require('handlebars');
+const path = require('path');
+const bodyParser = require('body-parser');
+const app = express();
+const handlebars = require('express-handlebars');
+const handlebars_mod = require('handlebars');
 const {
     allowInsecurePrototypeAccess
 } = require('@handlebars/allow-prototype-access');
-const bodyParser = require('body-parser');
+const appRoutes = require('./routes/approutes');
 const session = require('express-session');
 const flash = require('connect-flash');
-const path = require('path');
-const router = require('./routes/router');
-const sequelize = require('./config/database');
 
-sequelize.sync();
-
-const app = express();
 
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+app.use(bodyParser.json());
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+const helpers = require('./helpers/helpers'); // Import the helpers
+const {
+    sequelize
+} = require('./config/database');
+app.engine('handlebars', handlebars.engine({
+    defaultLayout: false,
+    handlebars: allowInsecurePrototypeAccess(handlebars_mod),
+    extname: '.handlebars',
+    helpers: helpers
+}));
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'handlebars');
+
+sequelize.sync();
 
 app.use(session({
     secret: 'secretkey',
@@ -35,17 +49,20 @@ app.use((req, res, next) => {
     next();
 });
 
-app.engine('.hbs', engine({
-    extname: '.hbs',
-    handlebars: allowInsecurePrototypeAccess(handlebars)
-}));
-app.set('view engine', '.hbs');
-app.set('views', path.join(__dirname, 'views'));
 
-app.use(express.static(path.join(__dirname, 'public')));
+sequelize.sync()
+    .then(() => {
+        console.log('Database synced sucessfully');
+    })
+    .catch((error) => {
+        console.error('Error syncing database:', error);
+    });
 
-app.use(router);
 
-app.listen(3000, () => {
-    console.log(`App listening on port 3000`);
+app.use(appRoutes);
+
+
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`App is running on port ${PORT}`);
 });

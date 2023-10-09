@@ -6,6 +6,8 @@ const bcrypt = require('bcrypt')
 
 const livros = require('../models/livros')(sequelize, Sequelize)
 const usuarios = require('../models/usuarios')(sequelize, Sequelize)
+const emprestimo = require('../models/emprestimo')(sequelize, Sequelize)
+const Op = Sequelize.Op;
 
 exports.index = (req, res) => {
     res.render('index');
@@ -33,19 +35,15 @@ exports.addUser = async (req, res) => {
 
 exports.authUser = async (req, res) => {
     const {
-        email,
-        senha
-    } = req.body;
-    const {
         id,
         nome,
         senha: senha_hashed
     } = await usuarios.findOne({
         where: {
-            email
+            email: req.body.email
         }
     });
-    const auth = await bcrypt.compare(senha, senha_hashed);
+    const auth = await bcrypt.compare(req.body.senha, senha_hashed);
     if (!auth) {
         req.flash('errors', 'Usuário ou senha incorretos');
         return res.redirect('/');
@@ -55,8 +53,105 @@ exports.authUser = async (req, res) => {
             id,
             nome
         };
-        return res.redirect('/user');
+        if(nome === "admin"){
+            return res.redirect('/livrosAdmin');
+        } else{
+            return res.redirect('/user');
+        }
     });
+};
+
+exports.logout = (req, res) => {
+    req.session.destroy(() => {
+        return res.redirect('/');
+    });
+};
+
+exports.showUser = async (req, res) =>{
+    const results = await emprestimo.findAll({
+        where: {
+            usuario: req.session.user.id
+        }
+    })
+    res.render('user');
+}
+
+exports.booksUser = async (req, res) => {
+    const results = await livros.findAll({
+        order: [
+            ['id', 'DESC']
+        ]
+    });
+    res.render('filtro', {
+        results
+    });
+};
+
+exports.booksYear = async (req, res) => {
+    const results = await livros.findAll({
+        order: [
+            ['ano', 'DESC']
+        ]
+    });
+    res.render('filtro', {
+        results
+    });
+};
+
+exports.busca =
+    async (req, res) => {
+        const results = await livros.findAll({
+            where: {
+                titulo: {
+                    [Op.substring]: req.query.busca
+                }
+            }
+        });
+        res.render('filtro', {
+            results
+        });
+    };
+
+exports.aluga = async (req, res) => {
+    const emprestimo = {
+        userid: req.session.user.id,
+        livroid: req.params.id,
+    };
+
+    const qtde = (await livros.findOne({
+            where: {
+                id: emprestimo.livroid
+            }
+        }))
+        .quantidade;
+
+    if (qtde == 0) {
+        req.flash('errors', 'Não há exemplares desse livro');
+        res.redirect('/user')
+    } else if (
+        await emprestimo.findOne({
+            where: {
+                usuario: emprestimo.userid,
+                livro: emprestimo.livroid
+            },
+        })
+    ) {
+        req.flash('errors', 'Você já alugou esse livro.');
+        res.redirect('/user')
+    } else
+        emprestimo
+        .create(emprestimo)
+        .then((dados) => {
+            livros.update({
+                quantidade: qtde - 1
+            }, {
+                where: {
+                    id: emprestimo.livroid
+                }
+            });
+            req.flash("dataRegister", "Dados registrados" + dados);
+            res.redirect("/");
+        })
 };
 
 exports.showBooks = async (req, res) => {
