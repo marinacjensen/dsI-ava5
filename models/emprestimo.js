@@ -1,9 +1,9 @@
 const {
     DataTypes
 } = require('sequelize');
-const sequelize = require('../config/database');
-const livros = require('./livros')(sequelize, sequelize);
-const usuario = require('./usuarios')(sequelize, sequelize);
+const { sequelize, Sequelize } = require('../config/database');
+const livros = require('./livros')(sequelize, Sequelize);
+const usuario = require('./usuarios')(sequelize, Sequelize);
 const emprestimo = sequelize.define('emprestimo', {
     usuario: {
         type: DataTypes.INTEGER,
@@ -23,10 +23,10 @@ const emprestimo = sequelize.define('emprestimo', {
     }
 });
 
-User.belongsToMany(livros, {
+usuario.belongsToMany(livros, {
     through: emprestimo
 });
-livros.belongsToMany(User, {
+livros.belongsToMany(usuario, {
     through: emprestimo
 });
 

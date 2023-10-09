@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 
 const livros = require('../models/livros')(sequelize, Sequelize);
 const usuarios = require('../models/usuarios')(sequelize, Sequelize);
-const emprestimo = require('../models/emprestimo')(sequelize, Sequelize);
+const emprestimo = require('../models/emprestimo');
 const Op = Sequelize.Op;
 
 exports.index = (req, res) => {
@@ -47,7 +47,7 @@ exports.authUser = async (req, res) => {
     if (!auth) {
         req.flash('errors', 'Usuário ou senha incorretos');
         return res.redirect('/');
-    }
+    }else{
     req.session.regenerate(() => {
         req.session.user = {
             id,
@@ -59,6 +59,7 @@ exports.authUser = async (req, res) => {
             return res.redirect('/user');
         }
     });
+};
 };
 
 exports.logout = (req, res) => {
@@ -114,13 +115,13 @@ exports.busca =
 
 exports.aluga = async (req, res) => {
     const emprestimo = {
-        userid: req.session.user.id,
-        livroid: req.params.id,
+        usuario: req.session.user.id,
+        livro: req.params.id,
     };
 
     const qtde = (await livros.findOne({
             where: {
-                id: emprestimo.livroid
+                id: emprestimo.livro
             }
         }))
         .quantidade;
@@ -131,8 +132,8 @@ exports.aluga = async (req, res) => {
     } else if (
         await emprestimo.findOne({
             where: {
-                usuario: emprestimo.userid,
-                livro: emprestimo.livroid
+                usuario: emprestimo.usuario,
+                livro: emprestimo.livro
             },
         })
     ) {
@@ -146,7 +147,7 @@ exports.aluga = async (req, res) => {
                 quantidade: qtde - 1
             }, {
                 where: {
-                    id: emprestimo.livroid
+                    id: emprestimo.livro
                 }
             });
             req.flash("dataRegister", "Dados registrados" + dados);
@@ -184,7 +185,7 @@ exports.addBooks = async (req, res) => {
         quantidade,
         user
     });
-    res.redirect('/livros');
+    res.redirect('/livrosAdmin');
 }
 
 exports.deleta = async (req, res) => {
@@ -194,7 +195,7 @@ exports.deleta = async (req, res) => {
             id
         }
     });
-    res.redirect('/livros');
+    res.redirect('/livrosAdmin');
 };
 
 exports.edita = async (req, res) => {
@@ -224,5 +225,5 @@ exports.atualiza = async (req, res) => {
             id
         }
     });
-    res.redirect('/livros');
+    res.redirect('/livrosAdmin');
 };
