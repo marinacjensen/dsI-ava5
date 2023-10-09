@@ -2,11 +2,11 @@ const {
     sequelize,
     Sequelize
 } = require('../config/database');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 
-const livros = require('../models/livros')(sequelize, Sequelize)
-const usuarios = require('../models/usuarios')(sequelize, Sequelize)
-const emprestimo = require('../models/emprestimo')(sequelize, Sequelize)
+const livros = require('../models/livros')(sequelize, Sequelize);
+const usuarios = require('../models/usuarios')(sequelize, Sequelize);
+const emprestimo = require('../models/emprestimo')(sequelize, Sequelize);
 const Op = Sequelize.Op;
 
 exports.index = (req, res) => {
